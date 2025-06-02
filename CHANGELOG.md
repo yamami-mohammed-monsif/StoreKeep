@@ -103,4 +103,8 @@ This file documents the significant changes and steps made to the StoreKeep appl
     *   Encountered `Error: React is not defined` in `src/app/(app)/layout.tsx` because `React.forwardRef` was used without importing `React`.
     *   **Fix**: Added `import * as React from "react";` to `src/app/(app)/layout.tsx`.
 
-```
+## Layout Fixes
+
+16. **Sidebar Overlap and Whitespace Issue**:
+    *   **Problem**: Main content area was obscured by the sidebar, and unexpected whitespace appeared on the right.
+    *   **Fix**: Refactored `src/app/(app)/layout.tsx` to remove a nested `<main>` tag within the `<SidebarInset>` component. Ensured the mobile `<header>` and page `{children}` (wrapped in a `div`) are direct children of `<SidebarInset>`, allowing its flex properties to correctly manage the layout. The `isActive` function logic for navigation was also updated to correctly handle locale prefixes.
