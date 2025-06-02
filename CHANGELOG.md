@@ -99,4 +99,8 @@ This file documents the significant changes and steps made to the StoreKeep appl
 14. **Next.js Config Syntax Error**:
     *   Encountered `SyntaxError: Unexpected token '{'` in `next.config.js` due to TypeScript syntax.
     *   **Fix**: Converted `next.config.js` to use pure JavaScript syntax (removed type annotations, used JSDoc for type hints). Deleted the redundant `next.config.ts` file.
+15. **Runtime Error: "React is not defined"**:
+    *   Encountered `Error: React is not defined` in `src/app/(app)/layout.tsx` because `React.forwardRef` was used without importing `React`.
+    *   **Fix**: Added `import * as React from "react";` to `src/app/(app)/layout.tsx`.
 
+```

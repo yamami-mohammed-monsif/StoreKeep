@@ -1,6 +1,7 @@
 
 "use client";
 
+import * as React from "react"; // Added this import
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -8,8 +9,7 @@ import {
   PackageSearch,
   ShoppingCart,
   BrainCircuit,
-  PanelLeft,
-  Languages, // Added for switcher
+  Languages, 
 } from "lucide-react";
 
 import {
@@ -46,18 +46,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const navItems = ready ? [
     { href: "/dashboard", icon: LayoutDashboard, label: t("dashboard") },
     { href: "/products", icon: PackageSearch, label: t("products") },
-    { href: "/sales", icon: ShoppingCart, label: t("recordSale") }, // This will map to the sales report/add sale page
+    { href: "/sales", icon: ShoppingCart, label: t("recordSale") }, 
     { href: "/restock", icon: BrainCircuit, label: t("restockAI") },
   ] : [];
 
   const isActive = (href: string) => {
-    // Normalize href to not include locale, e.g., /dashboard
     const baseHref = href.startsWith('/') ? href : `/${href}`;
 
-    // currentPathname might be /en/dashboard or /dashboard (for default ar)
     let normalizedPathname = currentPathname;
     if (currentPathname.startsWith('/en/')) {
-      normalizedPathname = currentPathname.substring(3) || "/"; // remove /en/
+      normalizedPathname = currentPathname.substring(3) || "/"; 
     }
     
     if (baseHref === '/dashboard') {
@@ -154,7 +152,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Dummy Label component if not imported, or ensure it's available
 const Label = React.forwardRef<
   React.ElementRef<"label">,
   React.ComponentPropsWithoutRef<"label">
