@@ -34,8 +34,7 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
     .insert([
       {
         sale_timestamp: saleTimestamp,
-        total_transaction_amount: itemTotalAmount, // For single item sale, this is the item total
-        // created_at and updated_at should be handled by DB defaults or triggers
+        total_transaction_amount: itemTotalAmount, 
       },
     ])
     .select()
@@ -47,20 +46,18 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
   }
 
   // 5. Insert the sale item record
-  // Note: The table name here should be 'sale_items' if your DB table is plural
   const { data: saleItemData, error: saleItemInsertError } = await supabase
-    .from('sale_items') // Assuming your table is 'sale_items' as per FK convention
+    .from('sale_items') 
     .insert([
       {
         sale_id: saleData.id,
         product_id: product.id,
-        product_name: product.name, // Denormalizing as per user schema
-        product_type: product.type, // Denormalizing as per user schema
+        product_name: product.name, 
+        product_type: product.type, 
         quantity_sold: formData.quantitySold,
-        wholesale_price: product.wholesale_price, // Denormalizing
-        retail_price: product.retail_price, // Price at the time of sale
+        wholesale_price: product.wholesale_price, 
+        retail_price: product.retail_price, 
         item_total_amount: itemTotalAmount,
-        // created_at and updated_at should be handled by DB defaults or triggers
       }
     ])
     .select()
@@ -68,8 +65,6 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
   
   if (saleItemInsertError || !saleItemData) {
     console.error('Error inserting sale item record:', saleItemInsertError?.message || 'Failed to insert sale item.');
-    // Potentially rollback sale or log inconsistency. For now, return error.
-    // If you have DB transactions, this would be part of it.
     return { error: saleItemInsertError?.message || 'Failed to insert sale item.' };
   }
 
@@ -82,7 +77,6 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
 
   if (updateError) {
     console.error('Error updating product quantity after sale:', updateError.message || updateError);
-    // For now, return success data but warn about quantity update failure
     return { data: { sale: saleData as Sale, saleItem: saleItemData as SaleItem }, error: `Sale recorded, but failed to update product quantity: ${updateError.message}` };
   }
 
@@ -93,7 +87,6 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
   return { data: { sale: saleData as Sale, saleItem: saleItemData as SaleItem } };
 }
 
-// Adjusted getSales to reflect the new structure with sale_item
 export async function getSales(limit: number = 50): Promise<{ data?: Sale[]; error?: string }> {
   const { data, error } = await supabase
     .from('sales')
@@ -107,7 +100,7 @@ export async function getSales(limit: number = 50): Promise<{ data?: Sale[]; err
         id,
         product_id,
         quantity_sold,
-        retail_price,
+        retail_price, 
         item_total_amount,
         created_at,
         products:products!product_id ( name, type ) 
@@ -129,9 +122,8 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
   if (period === 'today') {
     startDate.setHours(0, 0, 0, 0);
   } else if (period === 'week') {
-    // Supabase might handle date arithmetic better, but this is client-side logic for date range
     const day = startDate.getDay();
-    const diff = startDate.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+    const diff = startDate.getDate() - day + (day === 0 ? -6 : 1); 
     startDate = new Date(startDate.setDate(diff));
     startDate.setHours(0,0,0,0);
   } else if (period === 'month') {
@@ -148,6 +140,7 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
       sale_items:sale_items!sale_id( 
         product_id, 
         quantity_sold, 
+        item_total_amount,
         products:products!product_id(name)
       )
     `)
@@ -160,4 +153,3 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
   }
   return { data: data as Sale[] };
 }
-
