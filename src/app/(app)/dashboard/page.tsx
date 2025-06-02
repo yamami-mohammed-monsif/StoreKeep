@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   
   const error = statsError || chartError;
   const stats = statsData || null;
-  const salesChartDataProp = chartData || null;
+  const salesChartDataProp = chartData || [];
 
   return (
     <div className="w-full space-y-6">
@@ -29,7 +29,7 @@ export default async function DashboardPage() {
         <p className="text-muted-foreground">Welcome to StoreKeep! Here's an overview of your store.</p>
       </div>
       <Separator />
-      <DashboardClientPage stats={stats} salesChartData={salesChartDataProp || []} error={error} />
+      <DashboardClientPage stats={stats} salesChartData={salesChartDataProp} error={error} />
     </div>
   );
 }

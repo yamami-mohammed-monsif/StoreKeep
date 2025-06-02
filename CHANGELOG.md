@@ -79,3 +79,29 @@ This file documents the significant changes and steps made to the StoreKeep appl
         *   Styled table headers with a `bg-muted` background and `text-foreground` for text.
         *   Updated card title to "Recent Sales Data".
     *   Acknowledged that features like filtering, summary rows, visualizations, and export buttons are new functionalities to be added later.
+
+13. **Internationalization (Bilingual Support) Rollback**:
+    *   Reverted all changes related to implementing English and Arabic language support.
+    *   Removed i18n configuration from `next.config.js`.
+    *   Deleted locale files (`src/locales/`), `useTranslation` hook, and `LocaleSetter` component.
+    *   Reverted components and layouts to use hardcoded English strings and removed language switcher.
+    *   Reverted i18n-related font changes from `tailwind.config.ts` and `globals.css`.
+
+14. **`next.config.js` Syntax Fix**:
+    *   Encountered `SyntaxError: Unexpected token '{'` due to TypeScript syntax in `next.config.js`.
+    *   **Fix**: Modified `next.config.js` to use JavaScript-compatible syntax (removed TS type imports/annotations) and deleted `next.config.ts`.
+
+15. **"React is not defined" Fix**:
+    *   Encountered "React is not defined" error in `src/app/(app)/layout.tsx`.
+    *   **Fix**: Added `import * as React from "react";` to `src/app/(app)/layout.tsx`.
+
+16. **Layout & Whitespace Fixes**:
+    *   Addressed issue where content was hidden behind the sidebar or had excessive whitespace.
+    *   **Fix 1**: Refactored `src/app/(app)/layout.tsx` to remove nested `<main>` tag and correctly structure children within `<SidebarInset>`.
+    *   **Fix 2**: Modified `SidebarInset` in `src/components/ui/sidebar.tsx` to correctly apply margins based on sidebar state, preventing overlap.
+    *   **Fix 3**: Ensured `w-full` was applied to content wrappers in `src/app/(app)/layout.tsx`, `src/app/(app)/dashboard/page.tsx`, and `src/app/(app)/dashboard/DashboardClientPage.tsx` to utilize full available width.
+
+17. **404 Error Resolution Attempt**:
+    *   Restored `src/app/(app)/dashboard/page.tsx` and `src/app/(app)/dashboard/DashboardClientPage.tsx` to their pre-i18n (post-layout fix) states.
+    *   Simplified `isActive` function in `src/app/(app)/layout.tsx` for a non-i18n context.
+    *   Ensured `SalesByDay` type is imported in `src/app/(app)/dashboard/page.tsx`.

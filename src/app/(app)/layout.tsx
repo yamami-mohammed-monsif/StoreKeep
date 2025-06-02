@@ -38,6 +38,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   ];
 
   const isActive = (href: string) => {
+    // Simplified for non-i18n context
     if (href === "/dashboard") {
       return currentPathname === "/" || currentPathname === "/dashboard";
     }
@@ -80,7 +81,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <p className="text-xs text-sidebar-foreground/70">© 2024 StoreKeep Inc.</p>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset> 
+      <SidebarInset className="flex flex-col flex-1 w-full"> 
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-primary px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 py-4 md:hidden">
           <SidebarTrigger 
             size="icon" 
@@ -95,11 +96,3 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     </SidebarProvider>
   );
 }
-
-const Label = React.forwardRef<
-  React.ElementRef<"label">,
-  React.ComponentPropsWithoutRef<"label">
->(({ className, ...props }, ref) => (
-  <label ref={ref} className={cn(className)} {...props} />
-));
-Label.displayName = "Label";
