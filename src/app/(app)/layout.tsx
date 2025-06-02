@@ -38,7 +38,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarProvider defaultOpen>
-      <Sidebar연구실apsible="icon" variant="sidebar" side="left">
+      <Sidebar collapsible="icon" variant="sidebar" side="left">
         <SidebarHeader className="h-16 flex items-center justify-between px-4">
           <Link href="/dashboard" className="flex items-center gap-2 text-sidebar-foreground hover:text-sidebar-primary transition-colors">
             <Logo className="h-7 w-7 text-sidebar-primary" />
