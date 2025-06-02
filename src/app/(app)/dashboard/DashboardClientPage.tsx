@@ -15,6 +15,8 @@ import {
 } from "recharts";
 import type { SalesByDay } from "@/actions/dashboardActions";
 import { format } from 'date-fns';
+import useTranslation from "@/hooks/useTranslation";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface DashboardStats {
   totalProducts: number;
@@ -26,7 +28,7 @@ interface DashboardStats {
 
 interface DashboardClientPageProps {
   stats: DashboardStats | null;
-  salesChartData: SalesByDay[] | null;
+  salesChartData: SalesByDay[]; 
   error?: string;
 }
 
@@ -43,12 +45,25 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function DashboardClientPage({ stats, salesChartData, error }: DashboardClientPageProps) {
+  const { t, ready } = useTranslation();
+
+  if (!ready) {
+     return (
+      <div className="space-y-6">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-28 w-full" />)}
+        </div>
+        <Skeleton className="h-80 w-full" />
+      </div>
+    );
+  }
+  
   if (error) {
-    return <div className="text-destructive p-4">Error loading dashboard data: {error}</div>;
+    return <div className="text-destructive p-4">{t('errorLoadingDashboardData', {error: error})}</div>;
   }
 
   if (!stats) {
-    return <div className="p-4">Loading dashboard data...</div>;
+    return <div className="p-4">{t('loadingDashboardData')}</div>;
   }
 
   const chartData = salesChartData?.map(item => ({
@@ -60,61 +75,61 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
   return (
     <div className="space-y-6">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="border border-primary/30"> {/* Added subtle teal border */}
+        <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sales (Today)</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalSalesToday')}</CardTitle>
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">${stats.totalSalesToday.toFixed(2)}</div> {/* Styled with text-primary */}
+            <div className="text-2xl font-bold text-primary">${stats.totalSalesToday.toFixed(2)}</div>
           </CardContent>
         </Card>
-        <Card className="border border-primary/30"> {/* Added subtle teal border */}
+        <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sales (This Week)</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalSalesThisWeek')}</CardTitle>
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">${stats.totalSalesThisWeek.toFixed(2)}</div> {/* Styled with text-primary */}
+            <div className="text-2xl font-bold text-primary">${stats.totalSalesThisWeek.toFixed(2)}</div>
           </CardContent>
         </Card>
-        <Card className="border border-primary/30"> {/* Added subtle teal border */}
+        <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sales (This Month)</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalSalesThisMonth')}</CardTitle>
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-primary">${stats.totalSalesThisMonth.toFixed(2)}</div> {/* Styled with text-primary */}
+            <div className="text-2xl font-bold text-primary">${stats.totalSalesThisMonth.toFixed(2)}</div>
           </CardContent>
         </Card>
-         <Card className="border border-primary/30"> {/* Added subtle teal border */}
+         <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Products</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('totalProducts')}</CardTitle>
             <Package className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.totalProducts}</div>
           </CardContent>
         </Card>
-        <Card className="border border-primary/30"> {/* Added subtle teal border */}
+        <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Low Stock Items (&lt;10)</CardTitle>
+            <CardTitle className="text-sm font-medium">{t('lowStockItems')}</CardTitle>
             <AlertTriangle className="h-5 w-5 text-destructive" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.lowStockItems}</div>
              <p className="text-xs text-muted-foreground">
-              Items needing attention
+              {t('itemsNeedingAttention')}
             </p>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="border border-primary/30"> {/* Added subtle teal border to chart card as well */}
+      <Card className="border border-primary/30">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            Sales Trend (Last 7 Days)
+            {t('salesTrendLast7Days')}
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -138,12 +153,12 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
                 />
                 <Tooltip content={<CustomTooltip />} cursor={{ fill: 'hsl(var(--accent)/0.1)' }} />
                 <Legend wrapperStyle={{fontSize: "12px"}} />
-                <Bar dataKey="sales" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} name="Total Sales" /> {/* Fill will now be Deep Teal */}
+                <Bar dataKey="sales" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} name="Total Sales" />
               </BarChart>
             </ResponsiveContainer>
           ) : (
             <p className="text-muted-foreground text-center py-10">
-              Not enough sales data for the chart yet.
+              {t('notEnoughSalesData')}
             </p>
           )}
         </CardContent>

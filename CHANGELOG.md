@@ -81,3 +81,15 @@ This file documents the significant changes and steps made to the StoreKeep appl
         *   Updated card title to "Recent Sales Data".
     *   Acknowledged that features like filtering, summary rows, visualizations, and export buttons are new functionalities to be added later.
 
+## Internationalization (i18n) - Arabic & English
+
+13. **Bilingual Support Implementation**:
+    *   **Next.js Config**: Updated `next.config.js` to include `i18n` settings with `ar` (default) and `en` locales. Default locale (`ar`) will not have a URL prefix.
+    *   **Locale Files**: Created `src/locales/ar.json` and `src/locales/en.json` with initial translations for common UI strings.
+    *   **Translation Hook**: Added `src/hooks/useTranslation.ts` to manage loading translations and provide a `t()` function and language switching capability for client components.
+    *   **Locale Setter**: Created `src/components/LocaleSetter.tsx` client component to dynamically set `lang` and `dir` (RTL/LTR) attributes on the `<html>` tag.
+    *   **Root Layout**: Integrated `LocaleSetter` and added Arabic-supporting font (Tajawal) to `src/app/layout.tsx` and `tailwind.config.ts`, `globals.css`.
+    *   **App Shell Layout**: Modified `src/app/(app)/layout.tsx` to use `useTranslation` for navigation labels, titles, and added a language switcher dropdown in the sidebar.
+    *   **Dashboard**: Updated `src/app/(app)/dashboard/page.tsx` (now a client component) and `src/app/(app)/dashboard/DashboardClientPage.tsx` to use translated text.
+    *   **Sidebar**: Updated `src/components/ui/sidebar.tsx` to use translated text for the mobile navigation sheet title.
+    *   **Loading States**: Added basic loading/skeleton states for when translations are not yet ready.
