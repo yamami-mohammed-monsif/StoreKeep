@@ -17,8 +17,8 @@ export interface SaleItem {
   product_name?: string; // Can be denormalized or joined
   product_type?: string; // Can be denormalized or joined
   quantity_sold: number;
-  wholesale_price?: number; // Price at time of sale
-  retail_price: number; // Price at time of sale
+  wholesale_price_per_unit_snapshot?: number; // Price at time of sale - UPDATED
+  retail_price_per_unit_snapshot: number; // Price at time of sale - UPDATED
   item_total_amount: number;
   created_at: string;
   updated_at?: string;
@@ -38,5 +38,6 @@ export interface Sale {
 // This type might need to be re-evaluated based on how sales are fetched.
 // For now, it will assume sales are primarily linked to product via sale_items.
 export interface ProductWithSales extends Product {
-  sale_items: Pick<SaleItem, 'quantity_sold' | 'retail_price' | 'item_total_amount'> & { sale_timestamp: string }[];
+  sale_items: Pick<SaleItem, 'quantity_sold' | 'retail_price_per_unit_snapshot' | 'item_total_amount'> & { sale_timestamp: string }[];
 }
+

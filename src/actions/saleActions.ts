@@ -55,8 +55,8 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
         product_name: product.name, 
         product_type: product.type, 
         quantity_sold: formData.quantitySold,
-        wholesale_price: product.wholesale_price, 
-        retail_price: product.retail_price, 
+        wholesale_price_per_unit_snapshot: product.wholesale_price, 
+        retail_price_per_unit_snapshot: product.retail_price, 
         item_total_amount: itemTotalAmount,
       }
     ])
@@ -65,6 +65,7 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
   
   if (saleItemInsertError || !saleItemData) {
     console.error('Error inserting sale item record:', saleItemInsertError?.message || 'Failed to insert sale item.');
+    // Potentially roll back the sale record here if critical
     return { error: saleItemInsertError?.message || 'Failed to insert sale item.' };
   }
 
@@ -77,6 +78,8 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
 
   if (updateError) {
     console.error('Error updating product quantity after sale:', updateError.message || updateError);
+    // Sale recorded, but quantity update failed. This is a partial success.
+    // Consider how to handle this - e.g., alert admin, queue for retry.
     return { data: { sale: saleData as Sale, saleItem: saleItemData as SaleItem }, error: `Sale recorded, but failed to update product quantity: ${updateError.message}` };
   }
 
@@ -100,7 +103,7 @@ export async function getSales(limit: number = 50): Promise<{ data?: Sale[]; err
         id,
         product_id,
         quantity_sold,
-        retail_price, 
+        retail_price_per_unit_snapshot, 
         item_total_amount,
         created_at,
         products:products!product_id ( name, type ) 
@@ -123,7 +126,7 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
     startDate.setHours(0, 0, 0, 0);
   } else if (period === 'week') {
     const day = startDate.getDay();
-    const diff = startDate.getDate() - day + (day === 0 ? -6 : 1); 
+    const diff = startDate.getDate() - day + (day === 0 ? -6 : 1); // Adjust to make Monday the start of the week
     startDate = new Date(startDate.setDate(diff));
     startDate.setHours(0,0,0,0);
   } else if (period === 'month') {
@@ -153,3 +156,4 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
   }
   return { data: data as Sale[] };
 }
+
