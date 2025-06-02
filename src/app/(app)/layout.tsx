@@ -1,7 +1,7 @@
 
 "use client";
 
-import * as React from "react";
+import * as React from "react"; 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -9,7 +9,6 @@ import {
   PackageSearch,
   ShoppingCart,
   BrainCircuit,
-  Languages, 
 } from "lucide-react";
 
 import {
@@ -27,93 +26,37 @@ import {
 import { Logo } from "@/components/icons/Logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import useTranslation from "@/hooks/useTranslation";
-import type { Locale } from "@/hooks/useTranslation";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Skeleton } from "@/components/ui/skeleton";
-
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { t, currentLocale, changeLanguage, ready } = useTranslation();
   const currentPathname = usePathname();
 
-  const navItems = ready ? [
-    { href: "/dashboard", icon: LayoutDashboard, label: t("dashboard") },
-    { href: "/products", icon: PackageSearch, label: t("products") },
-    { href: "/sales", icon: ShoppingCart, label: t("recordSale") }, 
-    { href: "/restock", icon: BrainCircuit, label: t("restockAI") },
-  ] : [];
+  const navItems = [
+    { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+    { href: "/products", icon: PackageSearch, label: "Products" },
+    { href: "/sales", icon: ShoppingCart, label: "Record Sale" }, 
+    { href: "/restock", icon: BrainCircuit, label: "Restock AI" },
+  ];
 
   const isActive = (href: string) => {
-    const baseHref = href.startsWith('/') ? href : `/${href}`;
-
-    let normalizedPathname = currentPathname;
-    // Adjust for locale prefix if present
-    if (currentLocale !== 'ar' && currentPathname.startsWith(`/${currentLocale}`)) {
-      normalizedPathname = currentPathname.substring(currentLocale.length + 1) || "/";
+    if (href === "/dashboard") {
+      return currentPathname === "/" || currentPathname === "/dashboard";
     }
-    
-    if (baseHref === '/dashboard') {
-      return normalizedPathname === '/dashboard' || normalizedPathname === '/';
-    }
-    return normalizedPathname.startsWith(baseHref);
+    return currentPathname.startsWith(href);
   };
   
-  if (!ready) {
-    return (
-      <div className="flex h-screen">
-        <div className="w-64 bg-muted p-4 space-y-2">
-          <Skeleton className="h-10 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-          <Skeleton className="h-8 w-full" />
-        </div>
-        <div className="flex-1 p-6">
-          <Skeleton className="h-12 w-1/3 mb-4" />
-          <Skeleton className="h-64 w-full" />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <SidebarProvider defaultOpen>
       <Sidebar collapsible="icon" variant="sidebar" side="left">
         <SidebarHeader className="h-16 flex items-center justify-between px-4">
           <Link href={"/dashboard"} className="flex items-center gap-2 text-sidebar-foreground hover:text-sidebar-primary transition-colors">
             <Logo className="h-7 w-7 text-sidebar-foreground" />
-            <span className="font-semibold text-lg group-data-[collapsible=icon]:hidden">{t('storeKeep')}</span>
+            <span className="font-semibold text-lg group-data-[collapsible=icon]:hidden">StoreKeep</span>
           </Link>
           <div className="md:hidden">
              <SidebarTrigger />
           </div>
         </SidebarHeader>
         <SidebarContent>
-          <div className="p-2 group-data-[collapsible=icon]:hidden">
-            <Label htmlFor="language-select" className="sr-only">{t('language')}</Label>
-            <Select
-              value={currentLocale}
-              onValueChange={(value) => changeLanguage(value as Locale)}
-            >
-              <SelectTrigger id="language-select" className="w-full bg-sidebar-accent text-sidebar-accent-foreground border-sidebar-border focus:ring-sidebar-ring">
-                <div className="flex items-center gap-2">
-                  <Languages size={16} />
-                  <SelectValue placeholder={t('language')} />
-                </div>
-              </SelectTrigger>
-              <SelectContent className="bg-sidebar border-sidebar-border text-sidebar-foreground focus:ring-sidebar-ring">
-                <SelectItem value="ar" className="focus:bg-sidebar-primary focus:text-sidebar-primary-foreground">{t('arabic')}</SelectItem>
-                <SelectItem value="en" className="focus:bg-sidebar-primary focus:text-sidebar-primary-foreground">{t('english')}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.href}>
@@ -134,7 +77,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter className="p-4 group-data-[collapsible=icon]:hidden">
-          <p className="text-xs text-sidebar-foreground/70">{t('copyright')}</p>
+          <p className="text-xs text-sidebar-foreground/70">© 2024 StoreKeep Inc.</p>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset> 

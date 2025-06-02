@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet" 
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton"
 import {
   Tooltip,
@@ -19,7 +19,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import useTranslation from "@/hooks/useTranslation";
+// Removed useTranslation import
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -173,7 +173,7 @@ const Sidebar = React.forwardRef<
     ref
   ) => {
     const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
-    const { t, ready: i18nReady } = useTranslation(); 
+    // Removed useTranslation
 
     if (collapsible === "none") {
       return (
@@ -204,7 +204,8 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            {i18nReady ? <SheetTitle className="sr-only">{t('mainNavigation')}</SheetTitle> : <SheetTitle className="sr-only">Navigation</SheetTitle>}
+            {/* Hardcoded title */}
+            <SheetTitle className="sr-only">Main Navigation</SheetTitle>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
         </Sheet>
@@ -216,7 +217,7 @@ const Sidebar = React.forwardRef<
         ref={ref}
         className="group peer hidden md:block text-sidebar-foreground"
         data-state={state}
-        data-collapsible={state === "collapsed" ? collapsible : ""} // This sets data-collapsible="icon" when collapsed and collapsible="icon"
+        data-collapsible={state === "collapsed" ? collapsible : ""} 
         data-variant={variant}
         data-side={side}
       >
@@ -224,7 +225,6 @@ const Sidebar = React.forwardRef<
           className={cn(
             "duration-200 relative h-svh w-[--sidebar-width] bg-transparent transition-[width] ease-linear",
             "group-data-[collapsible=offcanvas]:w-0",
-            // "group-data-[side=right]:rotate-180", // rotate-180 seems problematic for spacer element
             variant === "floating" || variant === "inset"
               ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]"
               : "group-data-[collapsible=icon]:w-[--sidebar-width-icon]"
@@ -320,41 +320,16 @@ const SidebarInset = React.forwardRef<
       ref={ref}
       className={cn(
         "relative flex min-h-svh flex-1 flex-col bg-background transition-all duration-200 ease-linear",
-        
-        // Margins for non-inset variants (e.g., "sidebar", "floating") based on peer state and side
-        // Assumes peer has data-state="expanded" or data-state="collapsed"
-        // And peer has data-side="left" or data-side="right"
-        // And peer has data-collapsible="icon" when relevant for collapsed icon state width
-
-        // Sidebar on the left
         "md:peer-data-[state=expanded]:peer-data-[side=left]:ml-[var(--sidebar-width)]",
         "md:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=left]:ml-[var(--sidebar-width-icon)]",
-        // Case: collapsible="none" implies always expanded, so first rule (expanded) covers it.
-        // Case: collapsible="offcanvas" - spacer div width becomes 0, so SidebarInset (flex:1) takes full width. Margin should be 0.
         "md:peer-data-[collapsible=offcanvas]:peer-data-[side=left]:ml-0",
-
-
-        // Sidebar on the right
         "md:peer-data-[state=expanded]:peer-data-[side=right]:mr-[var(--sidebar-width)]",
         "md:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=right]:mr-[var(--sidebar-width-icon)]",
         "md:peer-data-[collapsible=offcanvas]:peer-data-[side=right]:mr-0",
-
-        // Floating variant specific collapsed margin (it has extra padding)
-        // These might need to be more specific if floating variant has different expanded width too.
         "md:peer-data-[variant=floating]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=left]:ml-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]",
         "md:peer-data-[variant=floating]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=right]:mr-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]",
-
-        // Inset variant specific styling (these are more specific and will override above if variant is inset)
         "peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))]",
-        "md:peer-data-[variant=inset]:m-2", // General margin for inset
-        // Inset might not need explicit ml/mr if m-2 is sufficient and content fills within that.
-        // Original inset specific margins:
-        // "md:peer-data-[variant=inset]:peer-data-[state=expanded]:ml-0", // This suggests m-2 provides the space, and ml-0 within that.
-        // "md:peer-data-[variant=inset]:peer-data-[state=collapsed]:peer-data-[side=left]:ml-2", 
-        // "md:peer-data-[variant=inset]:peer-data-[state=collapsed]:peer-data-[side=right]:mr-2",
-        // If m-2 is applied, then ml-0 inside that context makes sense for expanded.
-        // For collapsed inset, ml-2/mr-2 relative to the m-2 container needs careful thought if the sidebar is also inset.
-        // For now, the general m-2 for inset is the primary rule. If more specific margins are needed for inset they should be conditional on `peer-data-[variant=inset]`
+        "md:peer-data-[variant=inset]:m-2", 
         "md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
         className
       )}
@@ -790,4 +765,3 @@ export {
   SidebarTrigger,
   useSidebar,
 }
-

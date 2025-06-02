@@ -15,8 +15,6 @@ import {
 } from "recharts";
 import type { SalesByDay } from "@/actions/dashboardActions";
 import { format } from 'date-fns';
-import useTranslation from "@/hooks/useTranslation";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface DashboardStats {
   totalProducts: number;
@@ -45,25 +43,13 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 };
 
 export default function DashboardClientPage({ stats, salesChartData, error }: DashboardClientPageProps) {
-  const { t, ready } = useTranslation();
-
-  if (!ready) {
-     return (
-      <div className="w-full space-y-6">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-28 w-full" />)}
-        </div>
-        <Skeleton className="h-80 w-full" />
-      </div>
-    );
-  }
   
   if (error) {
-    return <div className="text-destructive p-4">{t('errorLoadingDashboardData', {error: error})}</div>;
+    return <div className="text-destructive p-4">Error loading dashboard data: {error}</div>;
   }
 
   if (!stats) {
-    return <div className="p-4">{t('loadingDashboardData')}</div>;
+    return <div className="p-4">Loading dashboard data...</div>;
   }
 
   const chartData = salesChartData?.map(item => ({
@@ -77,7 +63,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('totalSalesToday')}</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Sales (Today)</CardTitle>
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -86,7 +72,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
         </Card>
         <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('totalSalesThisWeek')}</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Sales (This Week)</CardTitle>
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -95,7 +81,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
         </Card>
         <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('totalSalesThisMonth')}</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Sales (This Month)</CardTitle>
             <DollarSign className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -104,7 +90,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
         </Card>
          <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('totalProducts')}</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Products</CardTitle>
             <Package className="h-5 w-5 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -113,13 +99,13 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
         </Card>
         <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('lowStockItems')}</CardTitle>
+            <CardTitle className="text-sm font-medium">Low Stock Items (&lt;10)</CardTitle>
             <AlertTriangle className="h-5 w-5 text-destructive" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.lowStockItems}</div>
              <p className="text-xs text-muted-foreground">
-              {t('itemsNeedingAttention')}
+              Items needing attention
             </p>
           </CardContent>
         </Card>
@@ -129,7 +115,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-primary" />
-            {t('salesTrendLast7Days')}
+            Sales Trend (Last 7 Days)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -158,7 +144,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
             </ResponsiveContainer>
           ) : (
             <p className="text-muted-foreground text-center py-10">
-              {t('notEnoughSalesData')}
+              Not enough sales data for the chart yet.
             </p>
           )}
         </CardContent>
