@@ -47,8 +47,9 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: { sal
   }
 
   // 5. Insert the sale item record
+  // Note: The table name here should be 'sale_items' if your DB table is plural
   const { data: saleItemData, error: saleItemInsertError } = await supabase
-    .from('sale_item')
+    .from('sale_items') // Assuming your table is 'sale_items' as per FK convention
     .insert([
       {
         sale_id: saleData.id,
@@ -102,7 +103,7 @@ export async function getSales(limit: number = 50): Promise<{ data?: Sale[]; err
       total_transaction_amount,
       created_at,
       updated_at,
-      sale_items:sale_item!sale_id (
+      sale_items:sale_items!sale_id ( 
         id,
         product_id,
         quantity_sold,
@@ -144,7 +145,7 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
       id, 
       sale_timestamp, 
       total_transaction_amount, 
-      sale_items:sale_item!sale_id(
+      sale_items:sale_items!sale_id( 
         product_id, 
         quantity_sold, 
         products:products!product_id(name)
@@ -159,3 +160,4 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
   }
   return { data: data as Sale[] };
 }
+
