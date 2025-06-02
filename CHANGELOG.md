@@ -1,3 +1,4 @@
+
 # Project Changelog
 
 This file documents the significant changes and steps made to the StoreKeep application.
@@ -52,7 +53,7 @@ This file documents the significant changes and steps made to the StoreKeep appl
 
 ## UI Styling & Accessibility
 
-9.  **Visual Theme Customization**:
+9.  **Visual Theme Customization (Dashboard & Global)**:
     *   User requested specific color theme changes (Deep Teal, Soft Gray, Warm Orange, etc.).
     *   **Implemented**:
         *   Updated `tailwind.config.ts`: Added a `positive` color for trends.
@@ -64,3 +65,11 @@ This file documents the significant changes and steps made to the StoreKeep appl
     *   Encountered Radix UI console error: "`DialogContent` requires a `DialogTitle`...".
     *   **Fix**: Modified `src/components/ui/sidebar.tsx`. Added a visually hidden `<SheetTitle className="sr-only">Main Navigation</SheetTitle>` inside the `SheetContent` for the mobile sidebar and imported `SheetTitle` from `../sheet`.
 
+11. **Sales Screen UI Enhancements**:
+    *   **Sales Page Header (`src/app/(app)/sales/page.tsx`):** Changed title to "Add New Sale" and added a styled "Back" button.
+    *   **Record Sale Form (`src/app/(app)/sales/RecordSaleForm.tsx`):**
+        *   Styled the "Complete Sale" button with a "Warm Orange" background and "White" text.
+        *   Updated success toasts to use a new "positive" variant.
+    *   **Product Form (`src/app/(app)/products/ProductForm.tsx`):** Updated success toasts to use the "positive" variant.
+    *   **Input Component (`src/components/ui/input.tsx`):** Enhanced focus styling to include a "Deep Teal" border.
+    *   **Toast Component (`src/components/ui/toast.tsx`):** Added a "positive" variant (Bright Green background, White text) for success messages.

@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -57,6 +58,7 @@ export default function RecordSaleForm({ products }: RecordSaleFormProps) {
       toast({
         title: "Success",
         description: "Sale recorded successfully.",
+        variant: "positive", // Use new positive variant
       });
       form.reset();
     }
@@ -67,7 +69,7 @@ export default function RecordSaleForm({ products }: RecordSaleFormProps) {
   return (
     <Card className="w-full max-w-lg">
       <CardHeader>
-        <CardTitle>Record New Sale</CardTitle>
+        <CardTitle>Record Sale Details</CardTitle>
       </CardHeader>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -117,9 +119,13 @@ export default function RecordSaleForm({ products }: RecordSaleFormProps) {
             />
           </CardContent>
           <CardFooter>
-            <Button type="submit" disabled={form.formState.isSubmitting || availableProducts.length === 0}>
+            <Button 
+              type="submit" 
+              disabled={form.formState.isSubmitting || availableProducts.length === 0}
+              className="bg-accent hover:bg-accent/90 text-primary-foreground" // Warm Orange background, White text
+            >
               {form.formState.isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Record Sale
+              Complete Sale
             </Button>
           </CardFooter>
         </form>

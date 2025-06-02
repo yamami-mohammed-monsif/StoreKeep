@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -35,6 +36,7 @@ export default function ProductForm() {
       toast({
         title: "Success",
         description: "Product added successfully.",
+        variant: "positive", // Use new positive variant
       });
       form.reset();
     }
