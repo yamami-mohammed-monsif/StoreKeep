@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,78 +9,81 @@ body {
 
 @layer base {
   :root {
-    --background: 0 0% 96%; /* #F5F5F5 Light Grey */
+    --background: 0 0% 96%; /* #F5F5F5 Soft Gray */
     --foreground: 0 0% 26%; /* #424242 Dark Grey */
-    --card: 0 0% 100%; /* white */
+    --card: 0 0% 100%; /* #FFFFFF Pure White */
     --card-foreground: 0 0% 26%; /* #424242 Dark Grey */
     --popover: 0 0% 100%; /* white */
     --popover-foreground: 0 0% 26%; /* #424242 Dark Grey */
-    --primary: 174 100% 24%; /* #00796B Deep Teal */
-    --primary-foreground: 0 0% 98%; /* nearly white */
-    --secondary: 0 0% 93%; /* #EDEDED Lighter Grey */
+    --primary: 165 100% 15%; /* #004D40 Deep Teal */
+    --primary-foreground: 0 0% 98%; /* #FFFFFF White */
+    --secondary: 0 0% 90%; /* #E6E6E6 Lighter Grey (was 93%) */
     --secondary-foreground: 0 0% 26%; /* #424242 Dark Grey */
-    --muted: 0 0% 90%; /* #E6E6E6 Muted Grey */
+    --muted: 0 0% 88%; /* #E0E0E0 Soft Gray */
     --muted-foreground: 0 0% 45%; /* #737373 Muted Text */
-    --accent: 45 100% 51%; /* #FFC107 Soft Gold */
+    --accent: 33 100% 50%; /* #FF8F00 Warm Orange */
     --accent-foreground: 0 0% 20%; /* #333333 Darker Grey for text on accent */
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 88%; /* #E0E0E0 */
+    --destructive: 0 84.2% 60.2%; /* Default Red */
+    --destructive-foreground: 0 0% 98%; /* Nearly white */
+    --positive: 98 72% 63%; /* #64DD17 Bright Green */
+    --border: 0 0% 88%; /* #E0E0E0 General borders */
     --input: 0 0% 88%; /* #E0E0E0 */
-    --ring: 174 100% 24%; /* Deep Teal for focus rings */
-    --chart-1: 174 76% 30%; /* Adjusted to primary shade */
-    --chart-2: 45 80% 45%;  /* Adjusted to accent shade */
-    --chart-3: 197 37% 50%; /* A complementary blue */
-    --chart-4: 210 40% 60%; /* Another complementary blue */
+    --ring: 165 100% 15%; /* Deep Teal for focus rings */
+    
+    --chart-1: 165 100% 15%; /* Deep Teal */
+    --chart-2: 33 100% 50%;  /* Warm Orange */
+    --chart-3: 197 37% 50%; 
+    --chart-4: 210 40% 60%; 
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
 
     /* Sidebar specific variables using the new theme */
-    --sidebar-background: hsl(var(--primary)); /* Deep Teal */
-    --sidebar-foreground: hsl(var(--primary-foreground)); /* Nearly white */
-    --sidebar-primary: hsl(var(--accent)); /* Soft Gold for active/important items */
-    --sidebar-primary-foreground: hsl(var(--accent-foreground)); /* Dark text for accent items */
-    --sidebar-accent: 174 100% 28%; /* Slightly lighter/brighter Teal for hover */
-    --sidebar-accent-foreground: hsl(var(--primary-foreground)); /* Nearly white */
-    --sidebar-border: 174 100% 20%; /* Darker Teal for borders within sidebar */
-    --sidebar-ring: hsl(var(--accent)); /* Soft Gold for rings in sidebar if needed */
+    --sidebar-background: 165 100% 15%; /* #004D40 Deep Teal */
+    --sidebar-foreground: 0 0% 98%; /* #FFFFFF White */
+    --sidebar-primary: 33 100% 50%; /* #FF8F00 Warm Orange for active/important items */
+    --sidebar-primary-foreground: 0 0% 20%; /* #333333 Dark text for accent items */
+    --sidebar-accent: 165 100% 22%; /* Slightly lighter/brighter Teal for hover (e.g. #007A63) */
+    --sidebar-accent-foreground: 0 0% 98%; /* White */
+    --sidebar-border: 165 100% 10%; /* Darker Teal for borders within sidebar (e.g. #00362B) */
+    --sidebar-ring: 33 100% 50%; /* Warm Orange for rings */
   }
 
   .dark {
-    /* Keeping dark mode defaults for now, can be themed later if needed */
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 174 100% 35%; /* Lighter Teal for dark mode */
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 45 100% 60%; /* Lighter Gold for dark mode */
-    --accent-foreground: 0 0% 10%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 174 100% 35%;
-    --chart-1: 174 70% 50%;
-    --chart-2: 45 60% 45%;
-    --chart-3: 197 37% 40%;
-    --chart-4: 210 40% 50%;
-    --chart-5: 27 75% 55%;
+    --background: 0 0% 10%; /* Darker background for contrast */
+    --foreground: 0 0% 90%; 
+    --card: 0 0% 12%; 
+    --card-foreground: 0 0% 90%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 90%;
+    --primary: 165 100% 25%; /* Lighter Deep Teal for dark mode */
+    --primary-foreground: 0 0% 95%;
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 85%;
+    --muted: 0 0% 25%; 
+    --muted-foreground: 0 0% 60%;
+    --accent: 33 100% 60%; /* Lighter Warm Orange for dark mode */
+    --accent-foreground: 0 0% 15%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 95%;
+    --positive: 98 60% 50%;
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 165 100% 25%; /* Lighter Deep Teal */
+    
+    --chart-1: 165 100% 25%;
+    --chart-2: 33 100% 60%;
+    --chart-3: 197 30% 40%;
+    --chart-4: 210 35% 50%;
+    --chart-5: 27 70% 50%;
 
-    --sidebar-background: 0 0% 10%; /* Dark grey for dark mode sidebar */
-    --sidebar-foreground: 0 0% 96%; /* Light text for dark sidebar */
-    --sidebar-primary: hsl(var(--accent)); /* Accent color (gold) for active items */
-    --sidebar-primary-foreground: 0 0% 10%; /* Dark text for accent items */
-    --sidebar-accent: 0 0% 18%; /* Slightly lighter grey for hover */
-    --sidebar-accent-foreground: 0 0% 98%; /* White for hover text */
-    --sidebar-border: 0 0% 15%;
-    --sidebar-ring: hsl(var(--accent));
+    --sidebar-background: 165 100% 12%; /* Darker, slightly desaturated Teal */
+    --sidebar-foreground: 0 0% 95%; 
+    --sidebar-primary: 33 100% 60%; /* Lighter Warm Orange */
+    --sidebar-primary-foreground: 0 0% 15%; 
+    --sidebar-accent: 165 100% 18%; /* Slightly lighter/brighter dark Teal for hover */
+    --sidebar-accent-foreground: 0 0% 95%; 
+    --sidebar-border: 165 100% 8%; 
+    --sidebar-ring: 33 100% 60%;
   }
 }
 
