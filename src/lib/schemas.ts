@@ -1,9 +1,12 @@
+
 import { z } from 'zod';
 
 export const ProductSchema = z.object({
   name: z.string().min(1, "Product name is required."),
-  price: z.coerce.number().min(0, "Price must be a positive number."),
+  // 'price' in the form will map to 'retail_price' in the database
+  price: z.coerce.number().min(0, "Retail price must be a positive number."),
   quantity: z.coerce.number().int().min(0, "Quantity must be a positive integer."),
+  // type and wholesale_price are not in the form, so not validated here unless added to form
 });
 export type ProductFormData = z.infer<typeof ProductSchema>;
 

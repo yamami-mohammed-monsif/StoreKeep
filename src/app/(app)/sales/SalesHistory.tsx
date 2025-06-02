@@ -1,6 +1,7 @@
+
 "use client";
 
-import type { Sale } from "@/types";
+import type { Sale, SaleItem } from "@/types";
 import { format } from 'date-fns';
 import {
   Table,
@@ -30,20 +31,29 @@ export default function SalesHistory({ sales }: SalesHistoryProps) {
           <Table>
             <TableHeader>
               <TableRow>
+                <TableHead>Sale ID</TableHead>
                 <TableHead>Product</TableHead>
-                <TableHead className="text-right">Quantity</TableHead>
-                <TableHead className="text-right">Total Amount</TableHead>
-                <TableHead>Date</TableHead>
+                <TableHead className="text-right">Qty Sold</TableHead>
+                <TableHead className="text-right">Item Total</TableHead>
+                <TableHead className="text-right">Transaction Total</TableHead>
+                <TableHead>Sale Timestamp</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {sales.map((sale) => (
-                <TableRow key={sale.id}>
-                  <TableCell className="font-medium">{sale.products?.name || 'N/A'}</TableCell>
-                  <TableCell className="text-right">{sale.quantity_sold}</TableCell>
-                  <TableCell className="text-right">${sale.total_amount.toFixed(2)}</TableCell>
-                  <TableCell>{format(new Date(sale.sale_date), "MMM d, yyyy HH:mm")}</TableCell>
-                </TableRow>
+                // Each sale can have multiple items, but for now we assume one for simplicity from recordSale
+                sale.sale_items && sale.sale_items.map((item: SaleItem) => (
+                  <TableRow key={`${sale.id}-${item.id}`}>
+                    <TableCell className="font-mono text-xs">{sale.id.substring(0,8)}...</TableCell>
+                    <TableCell className="font-medium">
+                      {item.products?.name || item.product_name || 'N/A'}
+                    </TableCell>
+                    <TableCell className="text-right">{item.quantity_sold}</TableCell>
+                    <TableCell className="text-right">${item.item_total_amount.toFixed(2)}</TableCell>
+                    <TableCell className="text-right">${sale.total_transaction_amount.toFixed(2)}</TableCell>
+                    <TableCell>{format(new Date(sale.sale_timestamp), "MMM d, yyyy HH:mm")}</TableCell>
+                  </TableRow>
+                ))
               ))}
             </TableBody>
           </Table>

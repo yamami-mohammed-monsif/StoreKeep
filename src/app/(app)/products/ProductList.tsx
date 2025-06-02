@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { Product } from "@/types";
@@ -34,8 +35,8 @@ interface ProductListProps {
 export default function ProductList({ products }: ProductListProps) {
   const { toast } = useToast();
   const [isPending, startTransition] = useTransition();
-  const [editingProductId, setEditingProductId] = useState<string | null>(null);
-  const [editQuantity, setEditQuantity] = useState<number>(0);
+  // const [editingProductId, setEditingProductId] = useState<string | null>(null); // Edit functionality not fully implemented
+  // const [editQuantity, setEditQuantity] = useState<number>(0);
 
 
   const handleDelete = async (productId: string) => {
@@ -91,7 +92,8 @@ export default function ProductList({ products }: ProductListProps) {
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead className="text-right">Price</TableHead>
+                <TableHead>Type</TableHead>
+                <TableHead className="text-right">Retail Price</TableHead>
                 <TableHead className="text-right">Quantity</TableHead>
                 <TableHead className="text-center">Actions</TableHead>
               </TableRow>
@@ -100,7 +102,8 @@ export default function ProductList({ products }: ProductListProps) {
               {products.map((product) => (
                 <TableRow key={product.id}>
                   <TableCell className="font-medium">{product.name}</TableCell>
-                  <TableCell className="text-right">${product.price.toFixed(2)}</TableCell>
+                  <TableCell>{product.type || 'N/A'}</TableCell>
+                  <TableCell className="text-right">${product.retail_price.toFixed(2)}</TableCell>
                   <TableCell className="text-right">
                     <div className="flex items-center justify-end gap-2">
                        <Button variant="ghost" size="icon" onClick={() => handleQuantityChange(product.id, -1)} disabled={isPending || product.quantity === 0}>

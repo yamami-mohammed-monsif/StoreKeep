@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -33,7 +34,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-background/80 backdrop-blur-sm p-2 border rounded-md shadow-lg">
-        <p className="label text-sm font-medium">{`${format(new Date(label), "MMM d")}`}</p>
+        {/* Label is already formatted as 'MMM d' from chartData map */}
+        <p className="label text-sm font-medium">{label}</p>
         <p className="intro text-sm text-primary">{`Sales: $${payload[0].value.toFixed(2)}`}</p>
       </div>
     );
@@ -51,7 +53,8 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
   }
 
   const chartData = salesChartData?.map(item => ({
-    name: format(new Date(item.date), 'MMM d'), // Format date for XAxis
+    // item.date is 'yyyy-MM-dd', format it for display
+    name: format(new Date(item.date + 'T00:00:00'), 'MMM d'), // Ensure date is parsed correctly by adding time part
     sales: item.totalSales,
   })) || [];
 
@@ -117,7 +120,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
           </CardTitle>
         </CardHeader>
         <CardContent>
-          {salesChartData && salesChartData.length > 0 ? (
+          {chartData && chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
