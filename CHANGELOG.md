@@ -93,3 +93,10 @@ This file documents the significant changes and steps made to the StoreKeep appl
     *   **Dashboard**: Updated `src/app/(app)/dashboard/page.tsx` (now a client component) and `src/app/(app)/dashboard/DashboardClientPage.tsx` to use translated text.
     *   **Sidebar**: Updated `src/components/ui/sidebar.tsx` to use translated text for the mobile navigation sheet title.
     *   **Loading States**: Added basic loading/skeleton states for when translations are not yet ready.
+
+## Build & Configuration Fixes
+
+14. **Next.js Config Syntax Error**:
+    *   Encountered `SyntaxError: Unexpected token '{'` in `next.config.js` due to TypeScript syntax.
+    *   **Fix**: Converted `next.config.js` to use pure JavaScript syntax (removed type annotations, used JSDoc for type hints). Deleted the redundant `next.config.ts` file.
+
