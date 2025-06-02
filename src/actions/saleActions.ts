@@ -159,4 +159,3 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
   }
   return { data: data as Sale[] };
 }
-
