@@ -21,7 +21,7 @@ export default function SalesHistory({ sales }: SalesHistoryProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Recent Sales</CardTitle>
+        <CardTitle>Recent Sales Data</CardTitle>
       </CardHeader>
       <CardContent>
         {sales.length === 0 ? (
@@ -30,13 +30,13 @@ export default function SalesHistory({ sales }: SalesHistoryProps) {
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Sale ID</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead className="text-right">Qty Sold</TableHead>
-                <TableHead className="text-right">Item Total</TableHead>
-                <TableHead className="text-right">Transaction Total</TableHead>
-                <TableHead>Sale Timestamp</TableHead>
+              <TableRow className="bg-muted hover:bg-muted">
+                <TableHead className="text-foreground">Sale ID</TableHead>
+                <TableHead className="text-foreground">Product</TableHead>
+                <TableHead className="text-right text-foreground">Qty Sold</TableHead>
+                <TableHead className="text-right text-foreground">Item Total</TableHead>
+                <TableHead className="text-right text-foreground">Transaction Total</TableHead>
+                <TableHead className="text-foreground">Sale Timestamp</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>

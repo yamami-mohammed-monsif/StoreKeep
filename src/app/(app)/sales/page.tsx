@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CalendarDays, Filter } from "lucide-react"; // Added CalendarDays, Filter for potential future use
 import RecordSaleForm from "./RecordSaleForm";
 import SalesHistory from "./SalesHistory";
 import { getProducts } from "@/actions/productActions";
@@ -38,10 +38,22 @@ export default async function SalesPage() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Add New Sale</h1>
-            <p className="text-muted-foreground">Track sales and automatically update stock levels.</p>
+            <h1 className="text-3xl font-bold tracking-tight">Sales Reports</h1>
+            <p className="text-muted-foreground">View and analyze your sales data.</p>
           </div>
         </div>
+        {/* Placeholder for future filter/calendar icons 
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="icon">
+            <Filter className="h-5 w-5" />
+            <span className="sr-only">Filter Sales</span>
+          </Button>
+          <Button variant="outline" size="icon">
+            <CalendarDays className="h-5 w-5" />
+            <span className="sr-only">Select Date Range</span>
+          </Button>
+        </div>
+        */}
       </div>
       <Separator />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
