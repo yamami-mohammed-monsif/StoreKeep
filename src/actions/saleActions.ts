@@ -102,14 +102,14 @@ export async function getSales(limit: number = 50): Promise<{ data?: Sale[]; err
       total_transaction_amount,
       created_at,
       updated_at,
-      sale_items:sale_item (
+      sale_items:sale_item!sale_id (
         id,
         product_id,
         quantity_sold,
         retail_price,
         item_total_amount,
         created_at,
-        products ( name, type ) 
+        products:products!product_id ( name, type ) 
       )
     `)
     .order('sale_timestamp', { ascending: false })
@@ -144,10 +144,10 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
       id, 
       sale_timestamp, 
       total_transaction_amount, 
-      sale_items:sale_item(
+      sale_items:sale_item!sale_id(
         product_id, 
         quantity_sold, 
-        products(name)
+        products:products!product_id(name)
       )
     `)
     .gte('sale_timestamp', startDate.toISOString())
@@ -159,3 +159,4 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
   }
   return { data: data as Sale[] };
 }
+
