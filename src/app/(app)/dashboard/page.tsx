@@ -1,3 +1,4 @@
+
 "use client";
 
 import DashboardClientPage from "./DashboardClientPage";
@@ -58,7 +59,7 @@ export default function DashboardPage() {
 
   if (!ready || loading) {
     return (
-      <div className="space-y-6">
+      <div className="w-full space-y-6">
         <div>
           <Skeleton className="h-10 w-1/4 mb-1" />
           <Skeleton className="h-6 w-1/2" />
@@ -73,7 +74,7 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="w-full space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">{t('dashboard')}</h1>
         <p className="text-muted-foreground">{t('welcomeToStoreKeep')}</p>

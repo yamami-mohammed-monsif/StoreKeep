@@ -49,7 +49,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
 
   if (!ready) {
      return (
-      <div className="space-y-6">
+      <div className="w-full space-y-6">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-28 w-full" />)}
         </div>
@@ -73,7 +73,7 @@ export default function DashboardClientPage({ stats, salesChartData, error }: Da
 
 
   return (
-    <div className="space-y-6">
+    <div className="w-full space-y-6">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <Card className="border border-primary/30">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

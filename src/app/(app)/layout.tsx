@@ -137,7 +137,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <p className="text-xs text-sidebar-foreground/70">{t('copyright')}</p>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset> {/* This component renders a <main> tag and is flex-col */}
+      <SidebarInset> 
         <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-primary px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 py-4 md:hidden">
           <SidebarTrigger 
             size="icon" 
@@ -145,8 +145,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             className="sm:hidden text-primary-foreground hover:bg-primary/80 hover:text-primary-foreground"
           />
         </header>
-        {/* This div now correctly contains the page content as a flex child of SidebarInset's main tag */}
-        <div className="flex-1 p-6 bg-background"> {/* Removed min-h, flex-1 in flex-col parent should handle height */}
+        <div className="flex-1 p-6 bg-background w-full"> 
             {children}
         </div>
       </SidebarInset>

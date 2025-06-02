@@ -111,4 +111,7 @@ This file documents the significant changes and steps made to the StoreKeep appl
 17. **Sidebar Overlap and Whitespace Issue (Attempt 2 - Current Fix)**:
     *   **Problem**: Main content area still obscured by the sidebar.
     *   **Fix**: Modified `src/components/ui/sidebar.tsx`. Added explicit peer-based margin classes to the `SidebarInset` component. This ensures that `SidebarInset` correctly adjusts its `margin-left` or `margin-right` based on the `Sidebar`'s state (expanded/collapsed) and side (left/right) for variants like "sidebar" and "floating". This makes the main content area provide space for the sidebar.
+18. **Content Area Not Filling Width**:
+    *   **Problem**: Main content area (e.g., Dashboard) not expanding to fill available horizontal space, leaving large whitespace on the right.
+    *   **Fix**: Applied `w-full` Tailwind class to the root `div` containers within `src/app/(app)/dashboard/page.tsx` and `src/app/(app)/dashboard/DashboardClientPage.tsx`. Also added `w-full` to the primary content wrapper `div` within `src/app/(app)/layout.tsx` to ensure the content hierarchy correctly expands.
 
