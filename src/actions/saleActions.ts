@@ -1,3 +1,4 @@
+
 "use server";
 
 import { supabase } from '@/lib/supabaseClient';
@@ -14,7 +15,7 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: Sale;
     .single();
 
   if (productError || !product) {
-    console.error('Error fetching product for sale:', productError);
+    console.error('Error fetching product for sale:', productError?.message || 'Product not found.');
     return { error: productError?.message || 'Product not found.' };
   }
 
@@ -44,7 +45,7 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: Sale;
     .single();
 
   if (saleError) {
-    console.error('Error recording sale:', saleError);
+    console.error('Error recording sale:', saleError.message || saleError);
     return { error: saleError.message };
   }
 
@@ -57,7 +58,7 @@ export async function recordSale(formData: SaleFormData): Promise<{ data?: Sale;
 
   if (updateError) {
     // Potentially roll back sale or log inconsistency
-    console.error('Error updating product quantity after sale:', updateError);
+    console.error('Error updating product quantity after sale:', updateError.message || updateError);
     // For now, return sale data but warn about quantity update failure
     return { data: saleData as Sale, error: `Sale recorded, but failed to update product quantity: ${updateError.message}` };
   }
@@ -77,7 +78,7 @@ export async function getSales(limit: number = 50): Promise<{ data?: Sale[]; err
     .limit(limit);
 
   if (error) {
-    console.error('Error fetching sales:', error);
+    console.error('Error fetching sales:', error.message || error);
     return { error: error.message };
   }
   return { data: data as Sale[] };
@@ -102,7 +103,7 @@ export async function getSalesForDashboard(period: 'today' | 'week' | 'month'): 
     .order('sale_date', { ascending: false });
   
   if (error) {
-    console.error(`Error fetching sales for ${period}:`, error);
+    console.error(`Error fetching sales for ${period}:`, error.message || error);
     return { error: error.message };
   }
   return { data: data as Sale[] };

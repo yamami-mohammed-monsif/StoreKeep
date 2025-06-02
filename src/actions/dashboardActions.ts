@@ -1,8 +1,10 @@
+
 "use server";
 
 import { supabase } from '@/lib/supabaseClient';
 import type { Sale, Product } from '@/types';
 import { startOfDay, startOfWeek, startOfMonth, endOfDay, endOfWeek, endOfMonth, subDays } from 'date-fns';
+import { format } from 'date-fns';
 
 interface DashboardStats {
   totalProducts: number;
@@ -63,7 +65,7 @@ export async function getDashboardStats(): Promise<{ data?: DashboardStats; erro
       }
     };
   } catch (error: any) {
-    console.error('Error fetching dashboard stats:', error);
+    console.error('Error fetching dashboard stats:', error.message || error);
     return { error: error.message };
   }
 }
@@ -105,10 +107,7 @@ export async function getSalesByDay(days: number = 7): Promise<{ data?: SalesByD
     return { data: aggregatedSales };
 
   } catch (error: any) {
-    console.error('Error fetching sales by day:', error);
+    console.error('Error fetching sales by day:', error.message || error);
     return { error: error.message };
   }
 }
-
-// Helper function to format date, if not using date-fns directly in component
-import { format } from 'date-fns';

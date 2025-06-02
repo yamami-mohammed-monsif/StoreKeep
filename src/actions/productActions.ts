@@ -1,3 +1,4 @@
+
 "use server";
 
 import { supabase } from '@/lib/supabaseClient';
@@ -15,7 +16,7 @@ export async function addProduct(formData: ProductFormData): Promise<{ data?: Pr
     .single();
 
   if (error) {
-    console.error('Error adding product:', error);
+    console.error('Error adding product:', error.message || error);
     return { error: error.message };
   }
   revalidatePath('/products');
@@ -30,7 +31,7 @@ export async function getProducts(): Promise<{ data?: Product[]; error?: string 
     .order('name', { ascending: true });
 
   if (error) {
-    console.error('Error fetching products:', error);
+    console.error('Error fetching products:', error.message || error);
     return { error: error.message };
   }
   return { data: data as Product[] };
@@ -43,7 +44,7 @@ export async function updateProductQuantity(productId: string, newQuantity: numb
     .eq('id', productId);
 
   if (error) {
-    console.error('Error updating product quantity:', error);
+    console.error('Error updating product quantity:', error.message || error);
     return { error: error.message };
   }
   revalidatePath('/products');
@@ -58,7 +59,7 @@ export async function deleteProduct(productId: string): Promise<{ error?: string
     .eq('id', productId);
 
   if (error) {
-    console.error('Error deleting product:', error);
+    console.error('Error deleting product:', error.message || error);
     return { error: error.message };
   }
   revalidatePath('/products');
