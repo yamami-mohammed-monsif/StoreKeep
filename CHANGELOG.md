@@ -105,6 +105,10 @@ This file documents the significant changes and steps made to the StoreKeep appl
 
 ## Layout Fixes
 
-16. **Sidebar Overlap and Whitespace Issue**:
+16. **Sidebar Overlap and Whitespace Issue (Attempt 1)**:
     *   **Problem**: Main content area was obscured by the sidebar, and unexpected whitespace appeared on the right.
-    *   **Fix**: Refactored `src/app/(app)/layout.tsx` to remove a nested `<main>` tag within the `<SidebarInset>` component. Ensured the mobile `<header>` and page `{children}` (wrapped in a `div`) are direct children of `<SidebarInset>`, allowing its flex properties to correctly manage the layout. The `isActive` function logic for navigation was also updated to correctly handle locale prefixes.
+    *   **Fix Attempt**: Refactored `src/app/(app)/layout.tsx` to remove a nested `<main>` tag within the `<SidebarInset>` component. Ensured the mobile `<header>` and page `{children}` (wrapped in a `div`) are direct children of `<SidebarInset>`, allowing its flex properties to correctly manage the layout. The `isActive` function logic for navigation was also updated to correctly handle locale prefixes.
+17. **Sidebar Overlap and Whitespace Issue (Attempt 2 - Current Fix)**:
+    *   **Problem**: Main content area still obscured by the sidebar.
+    *   **Fix**: Modified `src/components/ui/sidebar.tsx`. Added explicit peer-based margin classes to the `SidebarInset` component. This ensures that `SidebarInset` correctly adjusts its `margin-left` or `margin-right` based on the `Sidebar`'s state (expanded/collapsed) and side (left/right) for variants like "sidebar" and "floating". This makes the main content area provide space for the sidebar.
+
