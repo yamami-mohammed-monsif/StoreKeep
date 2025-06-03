@@ -105,3 +105,14 @@ This file documents the significant changes and steps made to the StoreKeep appl
     *   Restored `src/app/(app)/dashboard/page.tsx` and `src/app/(app)/dashboard/DashboardClientPage.tsx` to their pre-i18n (post-layout fix) states.
     *   Simplified `isActive` function in `src/app/(app)/layout.tsx` for a non-i18n context.
     *   Ensured `SalesByDay` type is imported in `src/app/(app)/dashboard/page.tsx`.
+
+18. **Main Content Margin Adjustment**:
+    *   Modified `src/components/ui/sidebar.tsx` in the `SidebarInset` component.
+    *   Changed the class `md:peer-data-[variant=sidebar]:peer-data-[state=expanded]:peer-data-[side=left]:ml-[var(--sidebar-width)]`
+        to `md:peer-data-[variant=sidebar]:peer-data-[state=expanded]:peer-data-[side=left]:ml-0`.
+    *   This makes the main content area have no left margin when the sidebar is `variant="sidebar"`, `state="expanded"`, and `side="left"`.
+    *   **Effect**: The expanded sidebar will now overlay the main content on desktop.
+    *   Also made an analogous change for a right-sided sidebar for consistency, changing `mr-[var(--sidebar-width)]` to `mr-0` for the expanded state.
+
+19. **Fix Sidebar Parsing Error**:
+    *   Corrected a parsing error in `src/components/ui/sidebar.tsx` by ensuring the file content, especially the export block, is correctly structured. This often occurs due to a missing closing brace or an issue with the last item in an export list.

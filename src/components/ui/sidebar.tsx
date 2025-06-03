@@ -19,7 +19,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-// Removed useTranslation import
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -173,7 +172,6 @@ const Sidebar = React.forwardRef<
     ref
   ) => {
     const { isMobile, state, openMobile, setOpenMobile } = useSidebar();
-    // Removed useTranslation
 
     if (collapsible === "none") {
       return (
@@ -204,7 +202,6 @@ const Sidebar = React.forwardRef<
             }
             side={side}
           >
-            {/* Hardcoded title */}
             <SheetTitle className="sr-only">Main Navigation</SheetTitle>
             <div className="flex h-full w-full flex-col">{children}</div>
           </SheetContent>
@@ -217,7 +214,7 @@ const Sidebar = React.forwardRef<
         ref={ref}
         className="group peer hidden md:block text-sidebar-foreground"
         data-state={state}
-        data-collapsible={state === "collapsed" ? collapsible : ""} 
+        data-collapsible={state === "collapsed" ? collapsible : ""}
         data-variant={variant}
         data-side={side}
       >
@@ -320,17 +317,32 @@ const SidebarInset = React.forwardRef<
       ref={ref}
       className={cn(
         "relative flex min-h-svh flex-1 flex-col bg-background transition-all duration-200 ease-linear",
-        "md:peer-data-[state=expanded]:peer-data-[side=left]:ml-[var(--sidebar-width)]",
-        "md:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=left]:ml-[var(--sidebar-width-icon)]",
-        "md:peer-data-[collapsible=offcanvas]:peer-data-[side=left]:ml-0",
-        "md:peer-data-[state=expanded]:peer-data-[side=right]:mr-[var(--sidebar-width)]",
-        "md:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=right]:mr-[var(--sidebar-width-icon)]",
-        "md:peer-data-[collapsible=offcanvas]:peer-data-[side=right]:mr-0",
+        // Left Sidebar
+        "md:peer-data-[variant=sidebar]:peer-data-[state=expanded]:peer-data-[side=left]:ml-0",
+        "md:peer-data-[variant=sidebar]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=left]:ml-[var(--sidebar-width-icon)]",
+        "md:peer-data-[variant=sidebar]:peer-data-[collapsible=offcanvas]:peer-data-[side=left]:ml-0",
+
+        // Right Sidebar (currently not used but for completeness)
+        "md:peer-data-[variant=sidebar]:peer-data-[state=expanded]:peer-data-[side=right]:mr-0",
+        "md:peer-data-[variant=sidebar]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=right]:mr-[var(--sidebar-width-icon)]",
+        "md:peer-data-[variant=sidebar]:peer-data-[collapsible=offcanvas]:peer-data-[side=right]:mr-0",
+
+        // Floating/Inset variants
+        "md:peer-data-[variant=floating]:peer-data-[state=expanded]:peer-data-[side=left]:ml-[var(--sidebar-width)]",
         "md:peer-data-[variant=floating]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=left]:ml-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]",
+        "md:peer-data-[variant=floating]:peer-data-[collapsible=offcanvas]:peer-data-[side=left]:ml-0",
+
+        "md:peer-data-[variant=floating]:peer-data-[state=expanded]:peer-data-[side=right]:mr-[var(--sidebar-width)]",
         "md:peer-data-[variant=floating]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=right]:mr-[calc(var(--sidebar-width-icon)_+_theme(spacing.4))]",
+        "md:peer-data-[variant=floating]:peer-data-[collapsible=offcanvas]:peer-data-[side=right]:mr-0",
+
         "peer-data-[variant=inset]:min-h-[calc(100svh-theme(spacing.4))]",
-        "md:peer-data-[variant=inset]:m-2", 
-        "md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow",
+        "md:peer-data-[variant=inset]:m-2",
+        "md:peer-data-[variant=inset]:peer-data-[state=expanded]:peer-data-[side=left]:ml-[calc(var(--sidebar-width)_+_theme(spacing.2))]",
+        "md:peer-data-[variant=inset]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=left]:ml-[calc(var(--sidebar-width-icon)_+_theme(spacing.2))]",
+        "md:peer-data-[variant=inset]:peer-data-[state=expanded]:peer-data-[side=right]:mr-[calc(var(--sidebar-width)_+_theme(spacing.2))]",
+        "md:peer-data-[variant=inset]:peer-data-[state=collapsed]:peer-data-[collapsible=icon]:peer-data-[side=right]:mr-[calc(var(--sidebar-width-icon)_+_theme(spacing.2))]",
+
         className
       )}
       {...props}
@@ -763,5 +775,4 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
-  useSidebar,
-}
+};
