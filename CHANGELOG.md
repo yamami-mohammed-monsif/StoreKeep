@@ -1,3 +1,4 @@
+
 # Project Changelog
 
 This file documents the significant changes and steps made to the StoreKeep application.
@@ -116,3 +117,6 @@ This file documents the significant changes and steps made to the StoreKeep appl
 
 19. **Fix Sidebar Parsing Error**:
     *   Corrected a parsing error in `src/components/ui/sidebar.tsx` by ensuring the file content, especially the export block, is correctly structured. This often occurs due to a missing closing brace or an issue with the last item in an export list.
+
+20. **Fix React Hydration Error**:
+    *   Modified `src/hooks/use-mobile.tsx` to initialize `isMobile` state to `false` and determine actual state in `useEffect`. This ensures consistent initial rendering between server and client, preventing hydration mismatches related to `window`-dependent logic.
